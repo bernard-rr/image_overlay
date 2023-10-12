@@ -1,8 +1,21 @@
 import streamlit as st
-from PIL import Image, ImageDraw, ImageFont
 
 # Title
-st.title("Fixed Text Overlay on Image")
+st.title("Google Font Text Overlay on Image")
+
+# Add the Google Font using HTML and CSS
+st.markdown(
+    """
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+        .google-font {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; /* You can adjust the font size as needed */
+            color: #000000; /* You can specify the font color */
+        }
+    </style>
+    """, unsafe_allow_html=True
+)
 
 # Upload an image
 uploaded_image = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"])
@@ -21,17 +34,5 @@ if uploaded_image is not None:
         text_x = 10
         text_y = 10
 
-        # Open the image using PIL
-        image = Image.open(uploaded_image)
-
-        # Create a drawing context
-        draw = ImageDraw.Draw(image)
-
-        # Load a font
-        font = ImageFont.truetype("arial.ttf", font_size)
-
-        # Draw the text on the image
-        draw.text((text_x, text_y), text, font=font, fill=font_color)
-
-        # Display the image with the overlay
-        st.image(image, caption="Image with Text Overlay", use_column_width=True)
+        # Display the text using the Google Font
+        st.markdown(f'<p class="google-font">{text}</p>', unsafe_allow_html=True)
