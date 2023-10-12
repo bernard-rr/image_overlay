@@ -37,7 +37,7 @@ if uploaded_image is not None:
         draw = ImageDraw.Draw(image)
 
         # Load the Raleway font
-        font = ImageFont.truetype("arial.ttf", font_size)  # Use "arial.ttf" as a fallback font
+        font = ImageFont.load_default()
 
         # Calculate text position
         text_x = 10
