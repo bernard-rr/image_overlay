@@ -43,12 +43,11 @@ if uploaded_image is not None:
         font = ImageFont.load_default()
 
         # Calculate the position to center the text
-        text_width, text_height = st.image.dimensions(font.getsize(text))
+        draw = ImageDraw.Draw(image)
+        text_width, text_height = draw.textsize(text, font)
+
         text_x = (img_width - text_width) // 2
         text_y = (img_height - text_height) // 2
-
-        # Create a drawing context
-        draw = ImageDraw.Draw(image)
 
         # Draw the text on the image
         draw.text((text_x, text_y), text, font=font, fill=font_color)
