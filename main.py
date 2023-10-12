@@ -36,14 +36,14 @@ if uploaded_image is not None:
         img_width, img_height = image.size
 
         # Fixed parameters
-        font_size = 100
+        font_size = 24
         font_color = "#000000"
 
         # Load the Raleway font
         font = ImageFont.load_default()
 
         # Calculate the position to center the text
-        text_width, text_height = font.getsize(text)
+        text_width, text_height = st.image.dimensions(font.getsize(text))
         text_x = (img_width - text_width) // 2
         text_y = (img_height - text_height) // 2
 
