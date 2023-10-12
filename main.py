@@ -1,35 +1,47 @@
 import streamlit as st
 from PIL import Image, ImageDraw, ImageFont
-import io
 
-# Load the image
-image_path = 'your_image.jpg'  # Replace with your image path
-image = Image.open(image_path)
-
-# Define text to overlay
-text_to_overlay = "Your Text Here"
-
-# Define text position (x, y) and other parameters
-text_position = (100, 100)  # Adjust the (x, y) coordinates as needed
-text_color = "white"
+# Define the path to the font file
 font_path = "/workspaces/image_overlay/Raleway/static/Raleway-BoldItalic.ttf"
-font_size = 36
 
-# Create a drawing context
-draw = ImageDraw.Draw(image)
+def overlay_text_on_image(image, text):
+    try:
+        img = Image.open(image)
+        draw = ImageDraw.Draw(img)
+        
+        # Define fixed parameters for text overlay
+        position = (100, 100)  # Change this to your desired position
+        text_color = (255, 255, 255)  # Change this to your desired text color
+        text_size = 36  # Change this to your desired text size
 
-# Load the specified font
-font = ImageFont.truetype(font_path, font_size)
+        # Load the font
+        font = ImageFont.truetype(font_path, text_size)
 
-# Draw the text on the image
-draw.text(text_position, text_to_overlay, fill=text_color, font=font)
+        # Overlay the text on the image
+        draw.text(position, text, fill=text_color, font=font)
+        
+        return img
+    except Exception as e:
+        return None
 
-# Display the modified image in Streamlit
-st.image(image, use_column_width=True)
+st.title("Image Text Overlay App")
 
-# Optionally, save the image with the overlay
-image_with_overlay_path = "image_with_overlay.jpg"
-image.save(image_with_overlay_path)
+# Upload image
+uploaded_image = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"])
 
-# Display the image with overlay for download
-st.markdown(f"**[Download Image with Overlay]({image_with_overlay_path})**")
+if uploaded_image is not None:
+    st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
+
+    # Get user input
+    text = st.text_input("Enter text to overlay on the image")
+
+    if st.button("Overlay Text"):
+        if text:
+            st.write("Image with Overlay:")
+            overlaid_image = overlay_text_on_image(uploaded_image, text)
+            if overlaid_image:
+                st.image(overlaid_image, caption="Image with Overlay", use_column_width=True)
+            else:
+                st.error("An error occurred while processing the image.")
+
+st.write("Note: You cannot edit the parameters as they are fixed.")
