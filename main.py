@@ -22,10 +22,10 @@ text = st.text_input("Enter text for overlay", value="Sample Text")
 
 if image is not None:
     # Display the original image
-    st.image(image, caption="Original Image", use_container_width=True)
+    st.image(image, caption="Original Image")
 
     # Add overlay text to the image
     overlayed_image = overlay_text(image, text)
     
     # Display the image with overlay
-    st.image(overlayed_image, caption="Image with Overlay", use_container_width=True)
+    st.image(overlayed_image, caption="Image with Overlay")
