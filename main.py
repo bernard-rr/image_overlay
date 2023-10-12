@@ -22,18 +22,13 @@ st.markdown(
 uploaded_image = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"])
 
 if uploaded_image is not None:
-    # Display the uploaded image
-    st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
-
     # Get user input text
     text = st.text_input("Enter text to overlay on the image")
 
     if text:
         # Fixed parameters
-        font_size = 24
+        font_size = 100
         font_color = "#000000"
-        text_x = 10
-        text_y = 10
 
         # Open the image using PIL
         image = Image.open(uploaded_image)
@@ -42,7 +37,11 @@ if uploaded_image is not None:
         draw = ImageDraw.Draw(image)
 
         # Load the Raleway font
-        font = ImageFont.load_default()
+        font = ImageFont.truetype("arial.ttf", font_size)  # Use "arial.ttf" as a fallback font
+
+        # Calculate text position
+        text_x = 10
+        text_y = 10
 
         # Draw the text on the image
         draw.text((text_x, text_y), text, font=font, fill=font_color)
